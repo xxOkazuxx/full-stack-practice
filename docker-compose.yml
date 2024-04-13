@@ -1,5 +1,18 @@
 version: '3.7'
+
 services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: p@ssw0rd
+      POSTGRES_DB: db_name
+    ports:
+      - 5432:5432
+    volumes:
+      - ./config:/docker-entrypoint-initdb.d
+      - db_volume:/var/lib/postgresql/data
+
   frontend:
     image: node:21-alpine3.18
     tty: true
@@ -9,3 +22,6 @@ services:
       - 5173:5173
     working_dir: /home/node/app
     command: /bin/sh -c "yarn install && yarn dev"
+
+volumes:
+  db_volume:
