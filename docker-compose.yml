@@ -1,12 +1,24 @@
 version: '3.7'
 
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./full-stack-backend/Dockerfile
+    volumes:
+      - ./full-stack-backend:/backend/
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+
   postgres:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: db_user
       POSTGRES_PASSWORD: p@ssw0rd
       POSTGRES_DB: db_name
+      TZ: Asia/Tokyo
+      ENV_LANG: ja_JP.UTF-8
     ports:
       - 5432:5432
     volumes:
