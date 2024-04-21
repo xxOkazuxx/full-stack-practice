@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Loading from './Loading';
 
 const Form = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            setLoading(true);
             await axios({
                 method: "Get",
                 url: "http://localhost:8000/api/companys/all",
@@ -15,17 +18,21 @@ const Form = () => {
                     "Content-Type": "application/json"
                 }
             }).then((res) => {
+                setLoading(false);
                 console.log(res.data);
             }).catch((error) => {
+                setLoading(false);
                 console.log(error);
             });
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
     }
 
     return (
         <div className='flex justify-center m-10'>
+            {loading && <Loading />}
             <form onSubmit={handleSubmit}>
                 <div className="form-group mb-5">
                     <label htmlFor="name">Name:</label>

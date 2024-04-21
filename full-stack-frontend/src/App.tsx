@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Form from './components/Form';
-// import Loading from './components/Loading';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -14,7 +13,6 @@ const App = () => {
         <button className="btn btn-primary" onClick={() => setCount(count + 1)}>Button: {count}</button>
       </div>
       <Form />
-      {/* <Loading /> */}
     </>
   )
 }
