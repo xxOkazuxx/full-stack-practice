@@ -23,3 +23,18 @@ class Repository:
             DBAccess.close_connection(connection)
 
         return allData
+    
+    def selectById(id):
+        connection = DBAccess.connect_database()
+
+        query = text("SELECT * FROM users WHERE id = 1;")
+        try:
+            row = connection.execute(query).first()
+            print(row)
+        except Exception as error:
+            print(error)
+
+        finally:
+            DBAccess.close_connection(connection)
+
+        return row
